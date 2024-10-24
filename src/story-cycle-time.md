@@ -39,5 +39,5 @@ const stories = FileAttachment("./data/story-cycle-time.json").json();
 </div>
 
 ```js
-cycleTime(stories, {threshold: 3 * 24, height: 600, width: 1400})
+cycleTime(stories, {height: 600, width: 1400})
 ```
