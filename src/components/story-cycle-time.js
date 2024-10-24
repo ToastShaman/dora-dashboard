@@ -1,18 +1,19 @@
 import * as Plot from "npm:@observablehq/plot";
 import { ascending, quantile, min, max } from "d3-array";
-import { utcTicks, utcMonth } from "d3-time";
+import { utcTicks, utcWeek } from "d3-time";
 import { differenceInHours, formatDistance } from 'date-fns'
 
 export function cycleTime(stories, { threshold, width, height } = {}) {
     const diffTime = (d) => differenceInHours(new Date(d.resolved), new Date(d.created));
     const fmtDiffTime = (d) => formatDistance(new Date(d.resolved), new Date(d.created), { addSuffix: true });
     const storiesWithCycleTime = stories.map(d => ({ ...d, cycle_time_h: diffTime(d) }));
+    const percentile99 = quantile(storiesWithCycleTime.map(d => d.cycle_time_h).sort(ascending), 0.99);
     const percentile95 = quantile(storiesWithCycleTime.map(d => d.cycle_time_h).sort(ascending), 0.95);
     const percentile80 = quantile(storiesWithCycleTime.map(d => d.cycle_time_h).sort(ascending), 0.80);
 
     const minDate = min(stories, d => new Date(d.created));
     const maxDate = max(stories, d => new Date(d.resolved));
-    const ticks = utcTicks(minDate, maxDate, utcMonth.every(1));
+    const ticks = utcTicks(minDate, maxDate, utcWeek.every(2));
 
     return Plot.plot({
         height,
@@ -21,7 +22,7 @@ export function cycleTime(stories, { threshold, width, height } = {}) {
             label: "End Date",
             type: "utc",
             tickFormat: "%Y-%m-%d",
-            ticks: ticks,
+            ticks,
         },
         y: {
             grid: true,
@@ -29,6 +30,13 @@ export function cycleTime(stories, { threshold, width, height } = {}) {
             label: "Resolution Time (hours)",
         },
         marks: [
+            Plot.ruleY([percentile99], {
+                stroke: "crimson",
+                strokeWidth: 2,
+                strokeDasharray: "4, 4",
+                label: "99th Percentile"
+            }),
+
             Plot.ruleY([percentile95], {
                 stroke: "lightcoral",
                 strokeWidth: 2,
@@ -37,7 +45,7 @@ export function cycleTime(stories, { threshold, width, height } = {}) {
             }),
 
             Plot.ruleY([percentile80], {
-                stroke: "lightcoral",
+                stroke: "lightblue",
                 strokeWidth: 2,
                 strokeDasharray: "4, 4",
                 label: "80th Percentile"
@@ -54,10 +62,10 @@ export function cycleTime(stories, { threshold, width, height } = {}) {
             Plot.text(storiesWithCycleTime, {
                 x: "created",
                 y: "cycle_time_h",
-                text: d => `${d.id} (${d.status}) - ${fmtDiffTime(d)}`,
+                text: d => `${d.id} - ${fmtDiffTime(d)}`,
                 lineAnchor: "bottom",
-                dy: -10,
-                lineWidth: 10,
+                dy: -15,
+                lineWidth: 50,
                 fontSize: 12
             })
         ],
