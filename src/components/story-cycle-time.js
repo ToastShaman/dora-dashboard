@@ -1,10 +1,25 @@
 import * as Plot from "npm:@observablehq/plot";
-import { ascending, quantile, min, max } from "d3-array";
-import { utcMonth, utcTicks, utcWeek } from "d3-time";
-import { differenceInHours, formatDistance } from 'date-fns'
+import { ascending, quantile, mean, min, max } from "d3-array";
+import { utcMonth, utcTicks } from "d3-time";
+import { differenceInHours, formatDistance, formatDuration, intervalToDuration, add } from 'date-fns'
+
+const diffTime = (d) => differenceInHours(new Date(d.resolved), new Date(d.created));
+
+const fmt = (hours) => {
+    const start = new Date();
+    const end = add(start, { hours });
+    return formatDuration(intervalToDuration({ start, end }), { format: ['days', 'hours'] });
+}
+
+export function meanCycleTime(stories) {
+    return fmt(mean(stories.map(d => diffTime(d))));
+};
+
+export function pCycleTime(stories, p) {
+    return fmt(quantile(stories.map(d => diffTime(d)).sort(ascending), p));
+}
 
 export function cycleTime(stories, { threshold, width, height } = {}) {
-    const diffTime = (d) => differenceInHours(new Date(d.resolved), new Date(d.created));
     const fmtDiffTime = (d) => formatDistance(new Date(d.resolved), new Date(d.created), { addSuffix: true });
     const storiesWithCycleTime = stories.map(d => ({ ...d, cycle_time_h: diffTime(d) }));
     const percentile99 = quantile(storiesWithCycleTime.map(d => d.cycle_time_h).sort(ascending), 0.99);
@@ -27,7 +42,7 @@ export function cycleTime(stories, { threshold, width, height } = {}) {
         y: {
             grid: true,
             inset: 10,
-            label: "Resolution Time (hours)",
+            label: "Cycle Time (hours)",
         },
         marks: [
             Plot.ruleY([percentile99], {
