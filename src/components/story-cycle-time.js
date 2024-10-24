@@ -1,6 +1,6 @@
 import * as Plot from "npm:@observablehq/plot";
 import { ascending, quantile, min, max } from "d3-array";
-import { utcTicks, utcWeek } from "d3-time";
+import { utcMonth, utcTicks, utcWeek } from "d3-time";
 import { differenceInHours, formatDistance } from 'date-fns'
 
 export function cycleTime(stories, { threshold, width, height } = {}) {
@@ -13,7 +13,7 @@ export function cycleTime(stories, { threshold, width, height } = {}) {
 
     const minDate = min(stories, d => new Date(d.created));
     const maxDate = max(stories, d => new Date(d.resolved));
-    const ticks = utcTicks(minDate, maxDate, utcWeek.every(2));
+    const ticks = utcTicks(minDate, maxDate, utcMonth.every(1));
 
     return Plot.plot({
         height,
@@ -54,19 +54,10 @@ export function cycleTime(stories, { threshold, width, height } = {}) {
             Plot.dot(storiesWithCycleTime, {
                 x: "created",
                 y: "cycle_time_h",
-                fill: d => d.cycle_time_h > threshold ? "red" : "steelblue",
                 r: 5,
-                tip: true
-            }),
-
-            Plot.text(storiesWithCycleTime, {
-                x: "created",
-                y: "cycle_time_h",
-                text: d => `${d.id} - ${fmtDiffTime(d)}`,
-                lineAnchor: "bottom",
-                dy: -15,
-                lineWidth: 50,
-                fontSize: 12
+                tip: true,
+                fill: d => d.cycle_time_h > threshold ? "red" : "steelblue",
+                title: d => `${d.id} (${fmtDiffTime(d)})`,
             })
         ],
     });

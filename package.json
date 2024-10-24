@@ -6,7 +6,8 @@
     "build": "observable build",
     "dev": "observable preview",
     "deploy": "observable deploy",
-    "observable": "observable"
+    "observable": "observable",
+    "fake": "node src/fake/generate-fake-story-cycle-time.js"
   },
   "dependencies": {
     "@observablehq/framework": "^1.12.0",
@@ -15,6 +16,7 @@
     "date-fns": "^4.1.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.0.3",
     "rimraf": "^5.0.5"
   },
   "engines": {
