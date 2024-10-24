@@ -8,7 +8,7 @@ const diffTime = (d) => differenceInHours(new Date(d.resolved), new Date(d.creat
 const fmt = (hours) => {
     const start = new Date();
     const end = add(start, { hours });
-    return formatDuration(intervalToDuration({ start, end }), { format: ['days', 'hours'] });
+    return formatDuration(intervalToDuration({ start, end }), { format: ['years', 'months', 'days', 'hours'] });
 }
 
 export function meanCycleTime(stories) {
