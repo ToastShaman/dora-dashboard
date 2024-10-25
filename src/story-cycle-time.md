@@ -11,7 +11,7 @@ The Cycle Time metric represents how many elapsed days a work item took to go th
 Once you have a few data points in your Cycle Time Scatter Plot, it becomes really useful as an analysis tool to answer one of the most important questions a stakeholder can ask you: When will a work item be done?
 
 ```js
-import {cycleTime, meanCycleTime, pCycleTime} from "./components/story-cycle-time.js";
+import {renderTimeline, calculateMedian, calculateQuantile} from "./components/story-cycle-time.js";
 ```
 
 ```js
@@ -20,25 +20,25 @@ const stories = FileAttachment("./data/fake-story-cycle-time.json").json();
 
 <div class="grid grid-cols-4">
   <div class="card">
-    <h2>Average Cycle Time</h2>
-    <span class="big">${meanCycleTime(stories)}</span>
+    <h2>Median Cycle Time</h2>
+    <span class="big">${calculateMedian(stories)}</span>
   </div>
   <div class="card">
     <h2>85th Percentile</h2>
-    <span class="big">${pCycleTime(stories, 0.85)}</span>
+    <span class="big">${calculateQuantile(stories, 0.85)}</span>
   </div>
   <div class="card">
     <h2>90th Percentile</h2>
-    <span class="big">${pCycleTime(stories, 0.90)}</span>
+    <span class="big">${calculateQuantile(stories, 0.90)}</span>
   </div>
   <div class="card">
     <h2>99th Percentile</h2>
-    <span class="big">${pCycleTime(stories, 0.99)}</span>
+    <span class="big">${calculateQuantile(stories, 0.99)}</span>
   </div>
 </div>
 
 <div class="grid grid-cols-1">
   <div>
-    ${resize((width) => cycleTime(stories, {width}))}
+    ${resize((width) => renderTimeline(stories, {width}))}
   </div>
 </div>

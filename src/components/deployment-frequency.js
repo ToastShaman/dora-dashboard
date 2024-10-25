@@ -1,10 +1,18 @@
 import * as Plot from "npm:@observablehq/plot";
-import { min, max } from "d3-array";
-import { utcDay, timeMonth } from "d3-time";
-import { timeFormat } from "d3-time-format";
-import { utcTicks } from "d3-time";
+import { utcDay } from "d3-time";
+import { median, rollups } from "d3-array";
 
-export function deploymentFrequency(events, { width } = {}) {
+export function calculateMedian(events, env = null) {
+    return median(
+        rollups(
+            events.filter((d) => env ? d.env === env : true),
+            (v) => v.length,
+            (d) => utcDay(new Date(d.date)),
+        ).map(([_, count]) => count),
+    );
+}
+
+export function renderTimeline(events, { width } = {}) {
     const data = events.map((d) => ({ ...d, date: new Date(d.date) }));
 
     return Plot.plot({
@@ -35,16 +43,14 @@ export function deploymentFrequency(events, { width } = {}) {
     });
 }
 
-export function deploymentFrequencyByEnv(events, { width } = {}) {
+export function renderTimelineByEnv(events, { width } = {}) {
     const data = events.map((d) => ({ ...d, date: new Date(d.date) }));
 
     return Plot.plot({
         height: 800,
         width,
-        x: { padding: 0, label: null, tickRotate: 90, tickSize: 6 },
         color: { legend: true },
-        fx: {
-            axis: null,
+        x: {
             label: "Date",
             tickFormat: "%Y-%m-%d",
             tickRotate: 90,
@@ -58,10 +64,9 @@ export function deploymentFrequencyByEnv(events, { width } = {}) {
             Plot.barY(
                 data,
                 Plot.groupX(
-                    { y2: "count" },
+                    { y: "count" },
                     {
-                        fx: (d) => utcDay(d.date),
-                        x: "env",
+                        x: (d) => utcDay(d.date),
                         fill: "env",
                         tip: true,
                     },

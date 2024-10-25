@@ -1,5 +1,5 @@
 import * as Plot from "npm:@observablehq/plot";
-import { ascending, quantile, mean, min, max } from "d3-array";
+import { ascending, quantile, median, mean, min, max } from "d3-array";
 import { utcMonth, utcTicks } from "d3-time";
 import {
     differenceInHours,
@@ -20,15 +20,15 @@ const fmt = (hours) => {
     });
 };
 
-export function meanCycleTime(stories) {
-    return fmt(mean(stories.map((d) => diffTime(d))));
+export function calculateMedian(stories) {
+    return fmt(median(stories.map((d) => diffTime(d))));
 }
 
-export function pCycleTime(stories, p) {
+export function calculateQuantile(stories, p) {
     return fmt(quantile(stories.map((d) => diffTime(d)).sort(ascending), p));
 }
 
-export function cycleTime(stories, { width } = {}) {
+export function renderTimeline(stories, { width } = {}) {
     const fmtDiffTime = (d) =>
         formatDistance(new Date(d.resolved), new Date(d.created), {
             addSuffix: true,
