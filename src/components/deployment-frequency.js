@@ -1,40 +1,36 @@
 import * as Plot from "npm:@observablehq/plot";
-import { group } from "d3-array";
-import { utcDay } from "d3-time";
-import { startOfDay, format } from "date-fns";
+import { min, max } from "d3-array";
+import { utcDay, timeMonth } from "d3-time";
+import { timeFormat } from "d3-time-format";
+import { utcTicks } from "d3-time";
 
 export function deploymentFrequency(events, { width } = {}) {
-    const eventsWithStartOfDay = events.map((d) => ({
-        ...d,
-        date: startOfDay(d.date),
-    }));
-
-    const grouped = Array.from(
-        group(eventsWithStartOfDay, (d) => d.date),
-        ([date, events]) => ({ date, count: events.length }),
-    );
-
-    grouped.sort((a, b) => a.date - b.date);
+    const data = events.map((d) => ({ ...d, date: new Date(d.date) }));
 
     return Plot.plot({
         height: 800,
         width,
         x: {
             label: "Date",
+            tickFormat: "%Y-%m-%d",
+            tickRotate: 90,
             interval: utcDay,
         },
         y: {
             label: "Deployments",
-            domain: [0, Math.max(...grouped.map((d) => d.count))],
-            ticks: Math.max(...grouped.map((d) => d.count)),
+            grid: true,
         },
         marks: [
-            Plot.barY(grouped, {
-                x: "date",
-                y: "count",
-                tip: true,
-                title: (d) => `${format(d.date, "YYY-MM-dd")} (${d.count})`,
-            }),
+            Plot.barY(
+                data,
+                Plot.groupX(
+                    { y: "count" },
+                    {
+                        x: (d) => utcDay(d.date),
+                        tip: true,
+                    },
+                ),
+            ),
         ],
     });
 }
