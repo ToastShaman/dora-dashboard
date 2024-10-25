@@ -34,23 +34,23 @@ export function renderTimeline(stories, { width } = {}) {
             addSuffix: true,
         });
 
-    const storiesWithCycleTime = stories.map((d) => ({
+    const data = stories.map((d) => ({
         ...d,
-        cycle_time_h: diffTime(d),
+        cycleTimeInHours: diffTime(d),
     }));
 
     const percentile99 = quantile(
-        storiesWithCycleTime.map((d) => d.cycle_time_h).sort(ascending),
+        data.map((d) => d.cycleTimeInHours).sort(ascending),
         0.99,
     );
 
     const percentile95 = quantile(
-        storiesWithCycleTime.map((d) => d.cycle_time_h).sort(ascending),
+        data.map((d) => d.cycleTimeInHours).sort(ascending),
         0.95,
     );
 
     const percentile80 = quantile(
-        storiesWithCycleTime.map((d) => d.cycle_time_h).sort(ascending),
+        data.map((d) => d.cycleTimeInHours).sort(ascending),
         0.8,
     );
 
@@ -101,12 +101,12 @@ export function renderTimeline(stories, { width } = {}) {
                 label: "80th Percentile",
             }),
 
-            Plot.dot(storiesWithCycleTime, {
+            Plot.dot(data, {
                 x: "created",
-                y: "cycle_time_h",
+                y: "cycleTimeInHours",
                 r: 5,
                 tip: true,
-                fill: (d) => colourRange(d.cycle_time_h),
+                fill: (d) => colourRange(d.cycleTimeInHours),
                 title: (d) => `${d.id} (${fmtDiffTime(d)})`,
             }),
         ],

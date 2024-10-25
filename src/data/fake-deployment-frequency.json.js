@@ -1,5 +1,4 @@
 import { faker } from "@faker-js/faker";
-import { add } from "date-fns";
 
 function random() {
     const env = faker.helpers.arrayElement(["dev", "staging", "prod"]);
