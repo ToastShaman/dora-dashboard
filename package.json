@@ -7,7 +7,7 @@
     "dev": "observable preview",
     "deploy": "observable deploy",
     "observable": "observable",
-    "fmt": "prettier --write \"src/**/*.+(js|json)\""
+    "fmt": "prettier --write \"(src|docs)/**/*.+(js|json)\""
   },
   "dependencies": {
     "@observablehq/framework": "^1.12.0",

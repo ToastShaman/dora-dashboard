@@ -1,0 +1,22 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/deployment-frequency.schema.json",
+    "title": "Deployment Frequency",
+    "description": "The frequency of deployments to production.",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "env": {
+                "type": "string",
+                "description": "The environment of the deployment."
+            },
+            "date": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date of the deployment."
+            }
+        },
+        "required": ["env", "date"]
+    }
+}

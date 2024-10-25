@@ -5,7 +5,7 @@ import { median, rollups } from "d3-array";
 export function calculateMedian(events, env = null) {
     return median(
         rollups(
-            events.filter((d) => env ? d.env === env : true),
+            events.filter((d) => (env ? d.env === env : true)),
             (v) => v.length,
             (d) => utcDay(new Date(d.date)),
         ).map(([_, count]) => count),

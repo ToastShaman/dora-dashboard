@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/story-cycle-time.schema.json",
+    "title": "Story Cycle Time",
+    "description": "The cycle time of stories.",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string",
+                "description": "The identifier of the story."
+            },
+            "created": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the story was created."
+            },
+            "resolved": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the story was resolved."
+            }
+        },
+        "required": ["id", "created", "resolved"]
+    }
+}
