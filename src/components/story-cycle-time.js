@@ -43,17 +43,17 @@ export function cycleTime(stories, { width } = {}) {
         storiesWithCycleTime.map((d) => d.cycle_time_h).sort(ascending),
         0.99,
     );
-    
+
     const percentile95 = quantile(
         storiesWithCycleTime.map((d) => d.cycle_time_h).sort(ascending),
         0.95,
     );
-    
+
     const percentile80 = quantile(
         storiesWithCycleTime.map((d) => d.cycle_time_h).sort(ascending),
         0.8,
     );
-    
+
     const colourRange = (value) => {
         if (value < percentile80) return "steelblue";
         if (value < percentile95) return "lightblue";

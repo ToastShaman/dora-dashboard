@@ -7,9 +7,8 @@ inspired_by: https://medium.com/agile-musings/the-cycle-time-scatter-plot-or-how
 
 # Story Cycle Time
 
-Cycle time is a key metric in agile software development, particularly in tracking the efficiency of delivering user stories or features.
-It refers to the total amount of time it takes for a user story to move through the entire workflow, from the moment work begins on it to the moment it's completed and delivered.
-Understanding cycle time can help teams identify bottlenecks, improve their processes, and ultimately deliver value faster.
+The Cycle Time metric represents how many elapsed days a work item took to go through your workflow.
+Once you have a few data points in your Cycle Time Scatter Plot, it becomes really useful as an analysis tool to answer one of the most important questions a stakeholder can ask you: When will a work item be done?
 
 ```js
 import {cycleTime, meanCycleTime, pCycleTime} from "./components/story-cycle-time.js";
