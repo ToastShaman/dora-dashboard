@@ -16,7 +16,7 @@ import {cycleTime, meanCycleTime, pCycleTime} from "./components/story-cycle-tim
 ```
 
 ```js
-const stories = FileAttachment("./data/story-cycle-time.json").json();
+const stories = FileAttachment("./data/fake-story-cycle-time.json").json();
 ```
 
 <div class="grid grid-cols-4">
@@ -38,6 +38,8 @@ const stories = FileAttachment("./data/story-cycle-time.json").json();
   </div>
 </div>
 
-```js
-cycleTime(stories, {height: 600, width: 1400})
-```
+<div class="grid grid-cols-1">
+  <div>
+    ${resize((width) => cycleTime(stories, {width}))}
+  </div>
+</div>
