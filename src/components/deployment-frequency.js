@@ -34,3 +34,39 @@ export function deploymentFrequency(events, { width } = {}) {
         ],
     });
 }
+
+export function deploymentFrequencyByEnv(events, { width } = {}) {
+    const data = events.map((d) => ({ ...d, date: new Date(d.date) }));
+
+    return Plot.plot({
+        height: 800,
+        width,
+        x: { padding: 0, label: null, tickRotate: 90, tickSize: 6 },
+        color: { legend: true },
+        fx: {
+            axis: null,
+            label: "Date",
+            tickFormat: "%Y-%m-%d",
+            tickRotate: 90,
+            interval: utcDay,
+        },
+        y: {
+            label: "Deployments",
+            grid: true,
+        },
+        marks: [
+            Plot.barY(
+                data,
+                Plot.groupX(
+                    { y2: "count" },
+                    {
+                        fx: (d) => utcDay(d.date),
+                        x: "env",
+                        fill: "env",
+                        tip: true,
+                    },
+                ),
+            ),
+        ],
+    });
+}
