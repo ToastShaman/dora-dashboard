@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://example.com/story-cycle-time.schema.json",
+    "title": "Mean Time to Recovery",
+    "description": "A list of incidents with their creation and resolution dates.",
+    "type": "array",
+    "items": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "type": "string",
+                "description": "The identifier of the incident."
+            },
+            "created": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the incident was created."
+            },
+            "resolved": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The date the incident was resolved."
+            }
+        },
+        "required": ["id", "created", "resolved"]
+    }
+}
