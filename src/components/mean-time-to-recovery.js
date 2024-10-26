@@ -1,37 +1,60 @@
 import * as Plot from "npm:@observablehq/plot";
-import { rollup, sum, ascending } from "d3-array";
+import { median, rollup, sum, ascending } from "d3-array";
 import { utcDay } from "d3-time";
-import { differenceInHours } from "date-fns";
+import {
+    differenceInHours,
+    formatDuration,
+    intervalToDuration,
+    add,
+} from "date-fns";
 
-const diffTime = (d) =>
-    differenceInHours(new Date(d.resolved), new Date(d.created));
+export function calculateMedian(events) {
+    const x = events.map((d) => {
+        const created = new Date(d.created);
+        const resolved = new Date(d.resolved);
+        return differenceInHours(resolved, created);
+    });
+    return median(x);
+}
+
+export function format(hours) {
+    const start = new Date();
+    const end = add(start, { hours });
+    return formatDuration(intervalToDuration({ start, end }), {
+        format: ["years", "months", "days", "hours"],
+    });
+}
 
 export function renderTimeline(events, { width } = {}) {
-    const data = events.map((d) => ({
-        created: new Date(d.created),
-        resolved: new Date(d.resolved),
-        recoveryTimeInHours: diffTime(d),
-    }));
+    const data = events.map((d) => {
+        const created = new Date(d.created);
+        const resolved = new Date(d.resolved);
+        const recoveryTimeInHours = differenceInHours(resolved, created);
+        return { created, resolved, recoveryTimeInHours };
+    });
 
-    const groupedData = Array.from(
-        rollup(
-            data,
-            (v) => sum(v, (d) => d.recoveryTimeInHours),
-            (d) => utcDay(d.created),
-        ),
-        ([date, recoveryTimeInHours]) => ({ date, recoveryTimeInHours }),
+    const groupedByDate = rollup(
+        data,
+        (v) => sum(v, (d) => d.recoveryTimeInHours),
+        (d) => utcDay(d.created),
     );
 
-    groupedData.sort((a, b) => ascending(a.date, b.date));
+    const flattened = Array.from(
+        groupedByDate,
+        ([created, recoveryTimeInHours]) => ({
+            created,
+            recoveryTimeInHours,
+        }),
+    )
+        .slice()
+        .sort((a, b) => ascending(a.created, b.created));
 
     return Plot.plot({
         height: 900,
         width,
         x: {
-            label: "Date",
             type: "utc",
-            tickFormat: "%Y-%m-%d",
-            tickRotate: 90,
+            tickFormat: "%d %b %y",
             interval: utcDay,
         },
         y: {
@@ -39,13 +62,13 @@ export function renderTimeline(events, { width } = {}) {
             grid: true,
         },
         marks: [
-            Plot.line(groupedData, {
-                x: "date",
+            Plot.line(flattened, {
+                x: "created",
                 y: "recoveryTimeInHours",
                 stroke: "steelblue",
             }),
-            Plot.dot(groupedData, {
-                x: "date",
+            Plot.dot(flattened, {
+                x: "created",
                 y: "recoveryTimeInHours",
                 fill: "red",
                 tip: true,
