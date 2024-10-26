@@ -9,23 +9,24 @@ import {
     add,
 } from "date-fns";
 
-const diffTime = (d) =>
-    differenceInHours(new Date(d.resolved), new Date(d.created));
+function diffTime(d) {
+    return differenceInHours(new Date(d.resolved), new Date(d.created));
+}
 
-const fmt = (hours) => {
+export function calculateMedian(stories) {
+    return median(stories.map((d) => diffTime(d)));
+}
+
+export function calculateQuantile(stories, p) {
+    return quantile(stories.map((d) => diffTime(d)).sort(ascending), p);
+}
+
+export function format(hours) {
     const start = new Date();
     const end = add(start, { hours });
     return formatDuration(intervalToDuration({ start, end }), {
         format: ["years", "months", "days", "hours"],
     });
-};
-
-export function calculateMedian(stories) {
-    return fmt(median(stories.map((d) => diffTime(d))));
-}
-
-export function calculateQuantile(stories, p) {
-    return fmt(quantile(stories.map((d) => diffTime(d)).sort(ascending), p));
 }
 
 export function renderTimeline(stories, { width } = {}) {
@@ -69,9 +70,8 @@ export function renderTimeline(stories, { width } = {}) {
         height: 800,
         width,
         x: {
-            label: "End Date",
             type: "utc",
-            tickFormat: "%Y-%m-%d",
+            tickFormat: "%d %b %y",
             ticks,
         },
         y: {

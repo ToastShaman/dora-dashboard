@@ -19,9 +19,7 @@ export function renderTimeline(events, { width } = {}) {
         height: 800,
         width,
         x: {
-            label: "Date",
-            tickFormat: "%Y-%m-%d",
-            tickRotate: 90,
+            tickFormat: "%d %b %y",
             interval: utcDay,
         },
         y: {
@@ -51,9 +49,7 @@ export function renderTimelineByEnv(events, { width } = {}) {
         width,
         color: { legend: true },
         x: {
-            label: "Date",
-            tickFormat: "%Y-%m-%d",
-            tickRotate: 90,
+            tickFormat: "%d %b %y",
             interval: utcDay,
         },
         y: {
