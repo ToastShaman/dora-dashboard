@@ -1,14 +1,13 @@
 ---
-title: Story Cycle Time
+title: Lead Time For Changes
 theme: dashboard
 toc: false
 inspired_by: https://medium.com/agile-musings/the-cycle-time-scatter-plot-or-how-to-answer-the-question-when-will-it-be-done-262b9088e92e
 ---
 
-# Story Cycle Time
+# Lead Time For Changes
 
-The Cycle Time metric represents how many elapsed days a work item took to go through your workflow.
-Once you have a few data points in your Cycle Time Scatter Plot, it becomes really useful as an analysis tool to answer one of the most important questions a stakeholder can ask you: When will a work item be done?
+Lead Time for Changes measures the average speed at which the DevOps team delivers code, from commitment to deployment. It indicates the team's capacity, the complexity of the code, and DevOps’ overall ability to respond to changes in the environment.
 
 ```js
 import {renderTimeline, calculateMedian, calculateQuantile, format} from "./components/story-cycle-time.js";

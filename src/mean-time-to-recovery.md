@@ -6,6 +6,8 @@ toc: false
 
 # Mean Time To Recovery
 
+Mean Time to Recovery (MTTR) is a key metric to measure the average time it takes to recover from a failure in production. 
+
 ```js
 import {renderTimeline, calculateMedian, format} from "./components/mean-time-to-recovery.js";
 ```
