@@ -66,6 +66,8 @@ export function renderTimeline(stories, { width } = {}) {
     const maxDate = max(stories, (d) => new Date(d.resolved));
     const ticks = utcTicks(minDate, maxDate, utcMonth.every(1));
 
+    const lastStory = data[data.length - 1];
+
     return Plot.plot({
         height: 800,
         width,
@@ -108,6 +110,27 @@ export function renderTimeline(stories, { width } = {}) {
                 tip: true,
                 fill: (d) => colourRange(d.cycleTimeInHours),
                 title: (d) => `${d.id} (${fmtDiffTime(d)})`,
+            }),
+
+            Plot.text([[lastStory.created, percentile80]], {
+                text: ["80th Percentile"],
+                fill: "lightblue",
+                textAnchor: "start",
+                dy: -16,
+            }),
+
+            Plot.text([[lastStory.created, percentile95]], {
+                text: ["95th Percentile"],
+                fill: "lightcoral",
+                textAnchor: "start",
+                dy: -16,
+            }),
+
+            Plot.text([[lastStory.created, percentile99]], {
+                text: ["99th Percentile"],
+                fill: "crimson",
+                textAnchor: "start",
+                dy: -16,
             }),
         ],
     });
