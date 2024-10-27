@@ -1,5 +1,5 @@
 import * as Plot from "npm:@observablehq/plot";
-import { median, rollup, sum, ascending } from "d3-array";
+import { median, rollups, sum, ascending } from "d3-array";
 import { utcDay } from "d3-time";
 import {
     differenceInHours,
@@ -9,12 +9,13 @@ import {
 } from "date-fns";
 
 export function calculateMedian(events) {
-    const x = events.map((d) => {
-        const created = new Date(d.created);
-        const resolved = new Date(d.resolved);
-        return differenceInHours(resolved, created);
-    });
-    return median(x);
+    return median(
+        events.map((d) => {
+            const created = new Date(d.created);
+            const resolved = new Date(d.resolved);
+            return differenceInHours(resolved, created);
+        }),
+    );
 }
 
 export function format(hours) {
@@ -33,19 +34,15 @@ export function renderTimeline(events, { width } = {}) {
         return { created, resolved, recoveryTimeInHours };
     });
 
-    const groupedByDate = rollup(
+    const groupedByDate = rollups(
         data,
         (v) => sum(v, (d) => d.recoveryTimeInHours),
         (d) => utcDay(d.created),
-    );
-
-    const flattened = Array.from(
-        groupedByDate,
-        ([created, recoveryTimeInHours]) => ({
+    )
+        .map(([created, recoveryTimeInHours]) => ({
             created,
             recoveryTimeInHours,
-        }),
-    )
+        }))
         .slice()
         .sort((a, b) => ascending(a.created, b.created));
 
@@ -62,12 +59,12 @@ export function renderTimeline(events, { width } = {}) {
             grid: true,
         },
         marks: [
-            Plot.line(flattened, {
+            Plot.line(groupedByDate, {
                 x: "created",
                 y: "recoveryTimeInHours",
                 stroke: "steelblue",
             }),
-            Plot.dot(flattened, {
+            Plot.dot(groupedByDate, {
                 x: "created",
                 y: "recoveryTimeInHours",
                 fill: "red",
