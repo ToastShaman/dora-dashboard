@@ -37,6 +37,17 @@ export function renderTimeline(events, { width } = {}) {
                     },
                 ),
             ),
+            Plot.text(
+                data,
+                Plot.groupX(
+                    { y: "count", text: "count" },
+                    {
+                        dy: -10,
+                        x: (d) => utcDay(d.date),
+                        textAnchor: "middle",
+                    },
+                ),
+            ),
         ],
     });
 }
@@ -65,6 +76,17 @@ export function renderTimelineByEnv(events, { width } = {}) {
                         x: (d) => utcDay(d.date),
                         fill: "env",
                         tip: true,
+                    },
+                ),
+            ),
+            Plot.text(
+                data,
+                Plot.groupX(
+                    { y: "count", text: "count" },
+                    {
+                        dy: -10,
+                        x: (d) => utcDay(d.date),
+                        textAnchor: "middle",
                     },
                 ),
             ),

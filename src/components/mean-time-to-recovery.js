@@ -38,13 +38,12 @@ export function renderTimeline(events, { width } = {}) {
         data,
         (v) => sum(v, (d) => d.recoveryTimeInHours),
         (d) => utcDay(d.created),
-    )
-        .map(([created, recoveryTimeInHours]) => ({
-            created,
-            recoveryTimeInHours,
-        }))
-        .slice()
-        .sort((a, b) => ascending(a.created, b.created));
+    ).map(([created, recoveryTimeInHours]) => ({
+        created,
+        recoveryTimeInHours,
+    }));
+
+    groupedByDate.sort((a, b) => ascending(a.created, b.created));
 
     return Plot.plot({
         height: 900,
