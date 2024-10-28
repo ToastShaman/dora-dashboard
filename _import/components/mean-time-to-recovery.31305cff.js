@@ -69,7 +69,7 @@ export function renderTimeline(events, { width } = {}) {
                 y: "recoveryTimeInHours",
                 fill: "red",
                 tip: true,
-                title: (d) => `${d.id} (${format(d.recoveryTimeInHours)})`,
+                title: (d) => `${format(d.recoveryTimeInHours)}`,
             }),
         ],
     });
