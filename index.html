@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.12.0">
+<title>Dora Dashboard</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-slate.d72ca8ef.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-slate.d72ca8ef.css">
+<link rel="modulepreload" href="./_observablehq/client.e51218a0.js">
+<link rel="modulepreload" href="./_observablehq/runtime.8eb97cbb.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.8048ec16.js">
+<link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
+<script type="module">
+
+import "./_observablehq/client.e51218a0.js";
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link observablehq-link-active"><a href="./">Dora Dashboard</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link"><a href="./deployment-frequency">Deployment Frequency</a></li>
+    <li class="observablehq-link"><a href="./mean-time-to-recovery">Mean Time To Recovery</a></li>
+    <li class="observablehq-link"><a href="./story-cycle-time">Lead Time For Changes</a></li>
+  </ol>
+</nav>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="dora-dashboard" tabindex="-1"><a class="observablehq-header-anchor" href="#dora-dashboard">Dora Dashboard</a></h1>
+<p>DevOps Research and Assessment (DORA) provides a standard set of DevOps metrics used for evaluating process performance and maturity. These metrics provide information about how quickly DevOps can respond to changes, the average time to deploy code, the frequency of iterations, and insight into failures.</p>
+<h2 id="what-is-dora" tabindex="-1"><a class="observablehq-header-anchor" href="#what-is-dora">What is DORA?</a></h2>
+<p>DORA originated as a team at Google Cloud specifically focused on assessing DevOps performance using a standard set of metrics. Their goal is to improve performance and collaboration while driving velocity. These metrics serve as a continuous improvement tool for DevOps teams everywhere by helping set goals based on current performance and then measuring progress against those goals.</p>
+<h2 id="what-are-dora-metrics" tabindex="-1"><a class="observablehq-header-anchor" href="#what-are-dora-metrics">What are DORA metrics?</a></h2>
+<p>DORA metrics for DevOps teams focus on four critical measures:</p>
+<ul>
+<li>Frequency of deployments</li>
+<li>The amount of time between acceptance and deployment</li>
+<li>How frequently deployments fail</li>
+<li>How long it takes to restore service—or recover from a failure</li>
+</ul>
+<h2 id="deployment-frequency" tabindex="-1"><a class="observablehq-header-anchor" href="#deployment-frequency">Deployment frequency</a></h2>
+<p>DevOps teams generally deliver software in smaller, more frequent deployments to reduce the number of changes and risks in each cycle. More frequent deployments allow teams to collect feedback sooner, which leads to faster iterations.</p>
+<p>Deployment frequency is the average number of daily finished code deployments to any given environment. This is an indicator of DevOps’ overall efficiency, as it measures the speed of the development team and their capabilities and level of automation.</p>
+<p>Reducing the amount of work or the size of each deployment can help increase deployment frequency.</p>
+<h2 id="lead-time-for-changes" tabindex="-1"><a class="observablehq-header-anchor" href="#lead-time-for-changes">Lead time for changes</a></h2>
+<p>Lead time for changes measures the average speed at which the DevOps team delivers code, from commitment to deployment. It indicates the team’s capacity, the complexity of the code, and DevOps’ overall ability to respond to changes in the environment.</p>
+<p>This metric helps businesses quantify code delivery speed to the customer or business. For example, some highly skilled teams may have an average lead time of 2-4 hours for changes, whereas for others, it may be a week.</p>
+<p>Reducing the amount of work in the deployment, improving code reviews, and increasing automation can help reduce lead time for changes.</p>
+<h2 id="time-to-restore-service" tabindex="-1"><a class="observablehq-header-anchor" href="#time-to-restore-service">Time to restore service</a></h2>
+<p>Response time is critical when something goes wrong in the production environment. Whether it is an external security threat or a bug that has brought standard processes to a standstill, DevOps teams must be able to respond rapidly with: Bug fixes, New code, Updates.</p>
+<p>The time to restore services, or mean time to recovery, is the average time between encountering the issue and resolving it in the production environment.</p>
+<p>A response plan helps teams understand how to address issues before they arise, ultimately decreasing the time to restore service.</p>
+<h1 id="how-to-get-started" tabindex="-1"><a class="observablehq-header-anchor" href="#how-to-get-started">How to get started</a></h1>
+<p>Prepare your data in the correct format to enable visualisation.
+After shaping the data properly, save it in the <code>./data/</code> folder.
+Then, update the include statement in the relevant report to reference your data:</p>
+<pre data-language="javascript"><code class="language-javascript"><span class="hljs-keyword">const</span> events = <span class="hljs-title class_">FileAttachment</span>(<span class="hljs-string">"./data/my-project-mean-time-to-recovery.json"</span>).<span class="hljs-title function_">json</span>();
+</code></pre>
+<p>See <code>README.md</code> for more help on how to build and deploy the dashboard.</p>
+<h2 id="deployment-frequency-1" tabindex="-1"><a class="observablehq-header-anchor" href="#deployment-frequency-1">Deployment frequency</a></h2>
+<pre data-language="json"><code class="language-json"><span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">"env"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"staging"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"date"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-02-03T09:36:59.432Z"</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">"env"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"dev"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"date"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-01-29T02:56:04.177Z"</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">"env"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"prod"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"date"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-01-14T06:43:28.841Z"</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    ...
+<span class="hljs-punctuation">]</span>
+</code></pre>
+<h2 id="time-to-restore-service-1" tabindex="-1"><a class="observablehq-header-anchor" href="#time-to-restore-service-1">Time to restore service</a></h2>
+<pre data-language="json"><code class="language-json"><span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"INC-96623"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"created"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-06-09T03:06:23.688Z"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"resolved"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-06-09T16:06:23.688Z"</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"INC-90006"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"created"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-01-03T06:51:26.580Z"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"resolved"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-01-04T03:51:26.580Z"</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"INC-94398"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"created"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-06-19T12:00:28.241Z"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"resolved"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-06-20T07:00:28.241Z"</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    ...
+<span class="hljs-punctuation">]</span>
+</code></pre>
+<h2 id="lead-time-for-changes-1" tabindex="-1"><a class="observablehq-header-anchor" href="#lead-time-for-changes-1">Lead time for changes</a></h2>
+<pre data-language="json"><code class="language-json"><span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"FKE-4212"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"created"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-05-09T04:20:11.003Z"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"resolved"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-05-12T15:20:11.003Z"</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span> <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"FKE-40918"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"created"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-06-21T18:23:25.885Z"</span><span class="hljs-punctuation">,</span> <span class="hljs-attr">"resolved"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"2024-06-23T09:23:25.885Z"</span> <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    ...
+<span class="hljs-punctuation">]</span>
+</code></pre>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="next" href="./deployment-frequency"><span>Deployment Frequency</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-10-28T13:17:11">Oct 28, 2024</a>.</div>
+</footer>
+</div>
