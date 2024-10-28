@@ -11,7 +11,7 @@
 <link rel="modulepreload" href="./_observablehq/client.e51218a0.js">
 <link rel="modulepreload" href="./_observablehq/runtime.8eb97cbb.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.8048ec16.js">
-<link rel="modulepreload" href="./_import/components/story-cycle-time.cd8b898b.js">
+<link rel="modulepreload" href="./_import/components/story-cycle-time.7ebb38bb.js">
 <link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/e828d8c8.js">
 <link rel="modulepreload" href="./_node/d3-array@3.2.4/index.f89e3560.js">
 <link rel="modulepreload" href="./_node/d3-time@3.1.0/index.8fcc123e.js">
@@ -60,12 +60,12 @@
 import {define} from "./_observablehq/client.e51218a0.js";
 import {registerFile} from "./_observablehq/stdlib.8048ec16.js";
 
-registerFile("./data/fake-story-cycle-time.json", {"name":"./data/fake-story-cycle-time.json","mimeType":"application/json","path":"./_file/data/fake-story-cycle-time.27fa4470.json","lastModified":1730123539079,"size":13392});
+registerFile("./data/fake-story-cycle-time.json", {"name":"./data/fake-story-cycle-time.json","mimeType":"application/json","path":"./_file/data/fake-story-cycle-time.84ada758.json","lastModified":1730133774693,"size":25931});
 
-define({id: "d7a5a650", outputs: ["renderTimeline","calculateMedian","calculateQuantile","format"], body: async () => {
-const {renderTimeline, calculateMedian, calculateQuantile, format} = await import("./_import/components/story-cycle-time.cd8b898b.js");
+define({id: "55e21073", outputs: ["renderTimeline","calculateMedian","calculateQuantile","renderBurndown","format"], body: async () => {
+const {renderTimeline, calculateMedian, calculateQuantile, renderBurndown, format} = await import("./_import/components/story-cycle-time.7ebb38bb.js");
 
-return {renderTimeline,calculateMedian,calculateQuantile,format};
+return {renderTimeline,calculateMedian,calculateQuantile,renderBurndown,format};
 }});
 
 define({id: "40db3da7", inputs: ["FileAttachment"], outputs: ["stories"], body: (FileAttachment) => {
@@ -103,6 +103,12 @@ resize((width) => renderTimeline(stories, {width}))
 ))
 }});
 
+define({id: "1b1d3d6e", mode: "inline", inputs: ["resize","renderBurndown","stories","display"], body: async (resize,renderBurndown,stories,display) => {
+display(await(
+resize((width) => renderBurndown(stories, {width}))
+))
+}});
+
 </script>
 <input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
 <label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
@@ -122,7 +128,7 @@ resize((width) => renderTimeline(stories, {width}))
 <main id="observablehq-main" class="observablehq">
 <h1 id="lead-time-for-changes" tabindex="-1"><a class="observablehq-header-anchor" href="#lead-time-for-changes">Lead Time For Changes</a></h1>
 <p>Lead Time for Changes measures the average speed at which the DevOps team delivers code, from commitment to deployment. It indicates the team's capacity, the complexity of the code, and DevOps’ overall ability to respond to changes in the environment.</p>
-<div class="observablehq observablehq--block"><!--:d7a5a650:--></div>
+<div class="observablehq observablehq--block"><!--:55e21073:--></div>
 <div class="observablehq observablehq--block"><!--:40db3da7:--></div>
 <div class="grid grid-cols-4">
   <div class="card">
@@ -147,9 +153,15 @@ resize((width) => renderTimeline(stories, {width}))
     <observablehq-loading></observablehq-loading><!--:7825ffcf:-->
   </div>
 </div>
-</main>
+<h2 id="burndown" tabindex="-1"><a class="observablehq-header-anchor" href="#burndown">Burndown</a></h2>
+<p>The burndown chart shows the number of open issues over time, illustrating the backlog's progression and tracking how long each issue remains unresolved before closure.</p>
+<div class="grid grid-cols-1">
+  <div>
+    <observablehq-loading></observablehq-loading><!--:1b1d3d6e:-->
+  </div>
+</div></main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./mean-time-to-recovery"><span>Mean Time To Recovery</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-10-28T13:52:13">Oct 28, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-10-28T16:42:48">Oct 28, 2024</a>.</div>
 </footer>
 </div>

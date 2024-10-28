@@ -1,9 +1,8 @@
 import * as Plot from "../../_npm/@observablehq/plot@0.6.16/e828d8c8.js";
-import { ascending, quantile, median, mean, min, max } from "../../_node/d3-array@3.2.4/index.f89e3560.js";
-import { utcMonth, utcTicks } from "../../_node/d3-time@3.1.0/index.8fcc123e.js";
+import { ascending, quantile, median, min, max } from "../../_node/d3-array@3.2.4/index.f89e3560.js";
+import { utcDay, utcDays, utcWeek, utcMonth, utcTicks } from "../../_node/d3-time@3.1.0/index.8fcc123e.js";
 import {
     differenceInHours,
-    formatDistance,
     formatDuration,
     intervalToDuration,
     add,
@@ -30,10 +29,12 @@ export function format(hours) {
 }
 
 export function renderTimeline(stories, { width } = {}) {
-    const data = stories.map((d) => ({
-        ...d,
-        cycleTimeInHours: diffTime(d),
-    }));
+    const data = stories
+        .filter((d) => d.resolved)
+        .map((d) => ({
+            ...d,
+            cycleTimeInHours: diffTime(d),
+        }));
 
     data.sort((a, b) => ascending(a.created, b.created));
 
@@ -133,6 +134,44 @@ export function renderTimeline(stories, { width } = {}) {
                 dx: -100,
                 dy: -15,
             }),
+        ],
+    });
+}
+
+export function renderBurndown(stories, { width } = {}) {
+    const data = stories.map((d) => {
+        const created = new Date(d.created);
+        const resolved = d.resolved ? new Date(d.resolved) : null;
+        return { ...d, created, resolved };
+    });
+
+    data.sort((a, b) => ascending(a.created, b.created));
+
+    const expanded = data.flatMap((i) => {
+        const dates = utcDays(i.created, i.resolved ?? utcDay());
+        return dates.map((at) => ({ created: i.created, at }));
+    });
+
+    return Plot.plot({
+        width,
+        height: 600,
+        x: { label: null },
+        color: { legend: true, label: "Opened" },
+        marks: [
+            Plot.areaY(
+                expanded,
+                Plot.binX(
+                    { y: "count", filter: null },
+                    {
+                        x: "at",
+                        fill: (d) => utcWeek(d.created),
+                        reverse: true,
+                        curve: "step",
+                        tip: { format: { x: null, z: null } },
+                        interval: "day",
+                    },
+                ),
+            ),
         ],
     });
 }
