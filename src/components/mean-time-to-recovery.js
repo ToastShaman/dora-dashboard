@@ -28,10 +28,11 @@ export function format(hours) {
 
 export function renderTimeline(events, { width } = {}) {
     const data = events.map((d) => {
+        const id = d.id;
         const created = new Date(d.created);
         const resolved = new Date(d.resolved);
         const recoveryTimeInHours = differenceInHours(resolved, created);
-        return { created, resolved, recoveryTimeInHours };
+        return { id, created, resolved, recoveryTimeInHours };
     });
 
     const groupedByDate = rollups(
@@ -68,6 +69,7 @@ export function renderTimeline(events, { width } = {}) {
                 y: "recoveryTimeInHours",
                 fill: "red",
                 tip: true,
+                title: (d) => `${d.id} (${format(d.recoveryTimeInHours)})`,
             }),
         ],
     });

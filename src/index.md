@@ -44,3 +44,47 @@ Response time is critical when something goes wrong in the production environmen
 The time to restore services, or mean time to recovery, is the average time between encountering the issue and resolving it in the production environment.
 
 A response plan helps teams understand how to address issues before they arise, ultimately decreasing the time to restore service.
+
+# How to get started
+
+Prepare your data in the correct format to enable visualisation.
+After shaping the data properly, save it in the `./data/` folder.
+Then, update the include statement in the relevant report to reference your data:
+
+```javascript
+const events = FileAttachment("./data/my-project-mean-time-to-recovery.json").json();
+```
+
+See `README.md` for more help on how to build and deploy the dashboard.
+
+## Deployment frequency
+
+```json
+[
+    { "env": "staging", "date": "2024-02-03T09:36:59.432Z" },
+    { "env": "dev", "date": "2024-01-29T02:56:04.177Z" },
+    { "env": "prod", "date": "2024-01-14T06:43:28.841Z" },
+    ...
+]
+```
+
+## Time to restore service
+
+```json
+[
+    { "id": "INC-96623", "created": "2024-06-09T03:06:23.688Z", "resolved": "2024-06-09T16:06:23.688Z" },
+    { "id": "INC-90006", "created": "2024-01-03T06:51:26.580Z", "resolved": "2024-01-04T03:51:26.580Z" },
+    { "id": "INC-94398", "created": "2024-06-19T12:00:28.241Z", "resolved": "2024-06-20T07:00:28.241Z" },
+    ...
+]
+```
+
+## Lead time for changes
+
+```json
+[
+    { "id": "FKE-4212", "created": "2024-05-09T04:20:11.003Z", "resolved": "2024-05-12T15:20:11.003Z" },
+    { "id": "FKE-40918", "created": "2024-06-21T18:23:25.885Z", "resolved": "2024-06-23T09:23:25.885Z" },
+    ...
+]
+```

@@ -30,15 +30,12 @@ export function format(hours) {
 }
 
 export function renderTimeline(stories, { width } = {}) {
-    const fmtDiffTime = (d) =>
-        formatDistance(new Date(d.resolved), new Date(d.created), {
-            addSuffix: true,
-        });
-
     const data = stories.map((d) => ({
         ...d,
         cycleTimeInHours: diffTime(d),
     }));
+
+    data.sort((a, b) => ascending(a.created, b.created));
 
     const percentile99 = quantile(
         data.map((d) => d.cycleTimeInHours).sort(ascending),
@@ -72,6 +69,7 @@ export function renderTimeline(stories, { width } = {}) {
         height: 800,
         width,
         x: {
+            label: null,
             type: "utc",
             tickFormat: "%d %b %y",
             ticks,
@@ -109,28 +107,31 @@ export function renderTimeline(stories, { width } = {}) {
                 r: 5,
                 tip: true,
                 fill: (d) => colourRange(d.cycleTimeInHours),
-                title: (d) => `${d.id} (${fmtDiffTime(d)})`,
+                title: (d) => `${d.id} (${format(d.cycleTimeInHours)})`,
             }),
 
             Plot.text([[lastStory.created, percentile80]], {
                 text: ["80th Percentile"],
                 fill: "lightblue",
                 textAnchor: "start",
-                dy: -16,
+                dx: -100,
+                dy: -15,
             }),
 
             Plot.text([[lastStory.created, percentile95]], {
                 text: ["95th Percentile"],
                 fill: "lightcoral",
                 textAnchor: "start",
-                dy: -16,
+                dx: -100,
+                dy: -15,
             }),
 
             Plot.text([[lastStory.created, percentile99]], {
                 text: ["99th Percentile"],
                 fill: "crimson",
                 textAnchor: "start",
-                dy: -16,
+                dx: -100,
+                dy: -15,
             }),
         ],
     });
